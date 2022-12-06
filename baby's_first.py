@@ -5,7 +5,7 @@ Created on Sun Dec  4 01:39:17 2022
 @author: condo
 """
 
-## setup
+#%% setup
 
 # importing pytorch et al
 import torch
@@ -17,7 +17,7 @@ import torchvision
 device = torch.device('cuda' if torch.cuda.is_available() else 'cpu')
 device
 
-## data procurement
+#%% data procurement
 
 # importing data packages
 from torchvision import datasets
@@ -94,7 +94,7 @@ loaders = {
 # to iterate over the dataset with a given sample plan
 loaders
 
-## PREPARE TO MODEL
+#%% PREPARE OBJECT DEFINITIONS
 # using a convolutional neural network
 
 # loading the torch subpackage for the convolutional nn algo
@@ -152,7 +152,9 @@ from torch import optim
 optimizer = optim.Adam(cnn.parameters(), lr = 0.01)
 optimizer
 
-## PREPARE TO TRAIN
+
+
+#%% PREPARE TO TRAIN
 
 # importing training toolkit
 from torch.autograd import Variable
@@ -163,7 +165,8 @@ num_epochs = 10
 # manually defining our training function, because apparently we need to
 def train(num_epochs, cnn, loaders):
     
-    cnn_train()
+    #assigning alias?
+    cnn.train()
     
     # TRAIN BBY TRAIN
     total_step = len(loaders['train'])
@@ -176,29 +179,28 @@ def train(num_epochs, cnn, loaders):
             b_x = Variable(images) 
             b_y = Variable(labels)
             
-# note, study indentation flow in Python
-output = cnn(b_x)[0]
+            # note, study indentation flow in Python
+            output = cnn(b_x)[0]               
             loss = loss_func(output, b_y)
             
-            # clear gradients for this training step
-            optimizer.zero_grad()
+            # clear gradients for this training step   
+            optimizer.zero_grad()           
             
-            # backpropagation, compute gradients
-            loss.backward()
-            
-            # apply gradients
-            optimizer.step()
+            # backpropagation, compute gradients 
+            loss.backward()                # apply gradients             
+            optimizer.step()                
             
             if (i+1) % 100 == 0:
-                print('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}'
-                      .format(epoch + 1, num_epochs, i + 1,
-total_step, loss.item()))
-                # what do these do
-                pass
-        pass
-    pass
+                print ('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}' 
+                       .format(epoch + 1, num_epochs, i + 1, 
+                        total_step, loss.item()))               
+# plot log scale losses using the loss.item
+# to do this store those in a list
+# this will show accuracy/loss per block 
+# possibly facet this?
 
 train(num_epochs, cnn, loaders)
 
-## TESTING TESTING 1-2-3
+#%% TESTING TESTING 1-2-3
 
+# plot log scale losses using the loss.item
