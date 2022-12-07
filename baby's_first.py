@@ -223,3 +223,16 @@ def test():
     print('Test accuracy of the model on the 10,000 test images: %.2f' % accuracy)
 
 test()        
+
+#%% and inspecting test results
+
+sample = next(iter(loaders['test']))
+imgs, lbls = sample
+
+actual_number = lbls[:10].numpy()
+actual_number
+
+test_output, last_layer = cnn(imgs[:10])
+pred_y = torch.max(test_output, 1)[1].data.numpy().squeeze()
+print(f'Prediction number: {pred_y}')
+print(f'Actual number: {actual_number}')
