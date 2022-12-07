@@ -83,12 +83,12 @@ loaders = {
     'train' : torch.utils.data.DataLoader(train_data,
                                           batch_size = 100,
                                           shuffle = True,
-                                          num_workers = 1),
+                                          num_workers = 0),
     
     'test' : torch.utils.data.DataLoader(test_data, 
                                          batch_size = 100,
                                          shuffle = True,
-                                         num_workers = 1),
+                                         num_workers = 0),
     }
 # this gives us another object layer which instructs a future function 
 # to iterate over the dataset with a given sample plan
@@ -193,14 +193,33 @@ def train(num_epochs, cnn, loaders):
             if (i+1) % 100 == 0:
                 print ('Epoch [{}/{}], Step [{}/{}], Loss: {:.4f}' 
                        .format(epoch + 1, num_epochs, i + 1, 
-                        total_step, loss.item()))               
+                               total_step, loss.item()))               
 # plot log scale losses using the loss.item
 # to do this store those in a list
 # this will show accuracy/loss per block 
 # possibly facet this?
 
+
+# why is my code breaking here when I don't run these blocks one at a time?
+
 train(num_epochs, cnn, loaders)
 
 #%% TESTING TESTING 1-2-3
 
-# plot log scale losses using the loss.item
+# defining the test function
+def test():
+    
+    # assigning alias
+    cnn.eval()
+    
+    with torch.no_grad():
+        correct = 0
+        total = 0
+        for images, labels in loaders['test']:
+            test_output, last_layer = cnn(images)
+            pred_y = torch.max(test_output, 1)[1].data.squeeze()
+            accuracy = (pred_y == labels).sum().item()
+            float(labels.size(0))
+    print('Test accuracy of the model on the 10,000 test images: %.2f' % accuracy)
+
+test()        
