@@ -199,9 +199,6 @@ def train(num_epochs, cnn, loaders):
 # this will show accuracy/loss per block 
 # possibly facet this?
 
-
-# why is my code breaking here when I don't run these blocks one at a time?
-
 train(num_epochs, cnn, loaders)
 
 #%% TESTING TESTING 1-2-3
