@@ -197,7 +197,6 @@ def train(num_epochs, cnn, loaders):
 # plot log scale losses using the loss.item
 # to do this store those in a list
 # this will show accuracy/loss per block 
-# possibly facet this?
 
 train(num_epochs, cnn, loaders)
 
